@@ -1,0 +1,28 @@
+To set up your EC2 instance:
+
+Using the Amazon EC2 console, associate your EC2 instance with a VPC security group that enables access to your mount target. For example, if you assigned the "default" security group to your mount target, you should assign the "default" security group to your EC2 instance. Learn more
+Open an SSH client and connect to your EC2 instance. (Find out how to connect.)
+If you're using an Amazon Linux EC2 instance, install the EFS mount helper with the following command:
+
+sudo yum install -y amazon-efs-utils
+
+If you're not using the EFS mount helper, install the NFS client on your EC2 instance:
+On a Red Hat Enterprise Linux or SUSE Linux instance, use this command:
+
+sudo yum install -y nfs-utils
+
+Open an SSH client and connect to your EC2 instance. (Find out how to connect).
+Create a new directory on your EC2 instance, such as "efs".
+
+sudo mkdir efs
+
+Mount your file system with a method listed following. If you need encryption of data in transit, use the EFS mount helper and the TLS mount option. Mounting considerations
+Using the EFS mount helper:
+
+sudo mount -t efs fs-b1b9b788:/ efs
+
+Using the EFS mount helper and the TLS mount option:
+
+sudo mount -t efs -o tls fs-b1b9b788:/ efs
+Using the NFS client:
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-b1b9b788.efs.ap-southeast-2.amazonaws.com:/ efs
